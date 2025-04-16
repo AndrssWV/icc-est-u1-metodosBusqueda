@@ -11,34 +11,38 @@ public class MetodosBusqueda {
         showConsole = new ShowConsole();
         this.people = people;
         showPerson();
+        showPersonByName();
     }
 
-    public int busquedaLineal(int[] arreglo, int busqueda) {
-        for(int i = 0; i < arreglo.length; i++) if (arreglo[i] == busqueda) return i;
-        return -1;
+    //public int busquedaLineal(int[] arreglo, int busqueda) {
+    //    for(int i = 0; i < arreglo.length; i++) if (arreglo[i] == busqueda) return i;
+    //    return -1;
+    //}
+
+    public int findPersonByCode(int code) {
+       for (int i = 0; i < people.length; i++) if (this.people[i].getCode()==code) return i;
+       return -1;
     }
 
-    public int busquedaLinealRecursiva(int[] arreglo, int busqueda, int i) {
-        if (i==arreglo.length) return -1;
-        if (arreglo[i] == busqueda) return i;
-        return busquedaLinealRecursiva(arreglo, busqueda, i+1);
-    }
-
-    /**
-     * @param code a buscar
-     * @return pocision de la persona encontrada
-     */
-
-     public int findPersonByCode(int code) {
-        for (int i = 0; i < people.length; i++) if (this.people[i].getCode()==code) return i;
+    public int findPersonByName(String name) {
+        for (int i = 0; i < people.length; i++) if (this.people[i].getName().equalsIgnoreCase(name)) return i;
         return -1;
      }
 
-     public void showPerson() {
-        int code = showConsole.inputCode();
-        int i = findPersonByCode(code);
+    public void showPerson() {
+       int code = showConsole.inputCode();
+       int i = findPersonByCode(code);
+       if (i>-1) {
+           showConsole.showMessage("Person with code '" + code + "' find out");
+           showConsole.showMessage(people[i].toString());
+       } else showConsole.showMessage("(Not Found)");
+    }
+
+    public void showPersonByName() {
+        String name = showConsole.inputName();
+        int i = findPersonByName(name);
         if (i>-1) {
-            showConsole.showMessage("Person with code" + code + " find out");
+            showConsole.showMessage("Person with name '" + name + "' find out");
             showConsole.showMessage(people[i].toString());
         } else showConsole.showMessage("(Not Found)");
      }
